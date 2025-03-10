@@ -4,11 +4,11 @@
 --  SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 --
 
-with "../config/a0b_stm32g4xx_config";
+with "../config/a0b_stm32g4_config";
 
 with "a0b_common";
 
-project A0B_STM32G4XX is
+project A0B_STM32G4 is
 
    for Target use "arm-eabi";
 
@@ -28,4 +28,4 @@ project A0B_STM32G4XX is
       for Switches ("Ada") use A0B_Common.Compiler_Switches_Ada;
    end Compiler;
 
-end A0B_STM32G4XX;
+end A0B_STM32G4;

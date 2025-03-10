@@ -1,15 +1,15 @@
-name = "a0b_stm32g4xx"
-description = "A0B: STM32G4xx base support"
+name = "a0b_stm32g4"
+description = "A0B: STM32G4 base support"
 version = "0.1.0-dev"
 
-website = "https://github.com/godunko/a0b-stm32g4xx"
+website = "https://github.com/godunko/a0b-stm32g4"
 authors = ["Vadim Godunko"]
 maintainers = ["Vadim Godunko <vgodunko@gmail.com>"]
 maintainers-logins = ["godunko"]
 licenses = "Apache-2.0 WITH LLVM-exception"
 tags = ["a0b", "embedded", "stm32", "stm32g4"]
 
-project-files = ["gnat/a0b_stm32g4xx.gpr"]
+project-files = ["gnat/a0b_stm32g4.gpr"]
 
 [configuration]
 generate_ada = false
