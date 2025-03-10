@@ -1,4 +1,5 @@
 /.objs/
+/.libs/
 /.vscode/
 /alire/
 /config/
