@@ -8,7 +8,7 @@ with "../config/a0b_stm32g4_config";
 
 with "a0b_common";
 
-project A0B_STM32G4 is
+library project A0B_STM32G4 is
 
    for Target use "arm-eabi";
 
@@ -21,8 +21,10 @@ project A0B_STM32G4 is
          null;
    end case;
 
-   for Source_Dirs use ("../source");
+   for Library_Name use "a0b_stm32g4";
+   for Library_Dir use "../.libs/" & A0B_Common.Library_Dir_Suffix;
    for Object_Dir use "../.objs/" & A0B_Common.Object_Dir_Suffix;
+   for Source_Dirs use ("../source");
 
    package Compiler is
       for Switches ("Ada") use A0B_Common.Compiler_Switches_Ada;
