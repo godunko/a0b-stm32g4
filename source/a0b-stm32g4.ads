@@ -6,12 +6,14 @@
 
 --  Common definitions for STM32G4xx family
 
-with A0B.ARMv7M;
+private with A0B.ARMv7M;
 private with A0B.Types;
 
-package A0B.STM32G4XX
+package A0B.STM32G4
   with Preelaborate, No_Elaboration_Code_All
 is
+
+private
 
    subtype Interrupt_Number is
      A0B.ARMv7M.External_Interrupt_Number range 0 .. 101;
@@ -59,7 +61,7 @@ is
    EXTI15_10                             : constant Interrupt_Number := 40;
    RTC_ALARM                             : constant Interrupt_Number := 41;
    USBWakeUP                             : constant Interrupt_Number := 42;
-   TIM8_BRK_TIM8_TERR_TIM8_BRK_TIM8_TERR : constant Interrupt_Number := 43;
+   TIM8_BRK_TIM8_TERR_TIM8_BRK_TIM8_IERR : constant Interrupt_Number := 43;
    TIM8_UP                               : constant Interrupt_Number := 44;
    TIM8_TRG_COM_TIM8_DIR_TIM8_IDX        : constant Interrupt_Number := 45;
    TIM8_CC                               : constant Interrupt_Number := 46;
@@ -79,7 +81,7 @@ is
    DMA2_CH5                              : constant Interrupt_Number := 60;
    ADC4                                  : constant Interrupt_Number := 61;
    ADC5                                  : constant Interrupt_Number := 62;
-   UCPD1_Global_Interrupt                : constant Interrupt_Number := 63;
+   UCPD1                                 : constant Interrupt_Number := 63;
    COMP1_2_3                             : constant Interrupt_Number := 64;
    COMP4_5_6                             : constant Interrupt_Number := 65;
    COMP7                                 : constant Interrupt_Number := 66;
@@ -126,20 +128,15 @@ is
 
    type GPIO_Line_Identifier is range 0 .. 15;
 
-   type Function_Line_Descriptor (<>) is limited private
-     with Preelaborable_Initialization;
-
-private
-
    type GPIO_Alternative_Function is mod 2 ** 4;
 
    type Function_Line_Configuration is record
       Controller           : GPIO_Controller_Identifier;
       Line                 : GPIO_Line_Identifier;
       Alternative_Function : GPIO_Alternative_Function;
-   end record with Pack;
+   end record with Pack, Preelaborable_Initialization;
 
    type Function_Line_Descriptor is
      array (A0B.Types.Unsigned_8 range <>) of Function_Line_Configuration;
 
-end A0B.STM32G4XX;
+end A0B.STM32G4;
