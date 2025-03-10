@@ -18,13 +18,14 @@ package A0B.STM32G4.Peripherals.RCC
   with Preelaborate, No_Elaboration_Code_All
 is
 
-   use type System.Storage_Elements.Storage_Offset;
+   use type System.Storage_Elements.Integer_Address;
 
-   RCC_Base_Address   : constant System.Address :=
-     System.Storage_Elements.To_Address (16#4000_7000#);
-   RCC_CR_Offset      : constant System.Storage_Elements.Storage_Offset := 16#00#;
-   RCC_CFGR_Offset    : constant System.Storage_Elements.Storage_Offset := 16#08#;
-   RCC_PLLCFGR_Offset : constant System.Storage_Elements.Storage_Offset := 16#0C#;
+   RCC_Base_Address   : constant := 16#4002_1000#;
+   RCC_CR_Offset      : constant := 16#00#;
+   RCC_CFGR_Offset    : constant := 16#08#;
+   RCC_PLLCFGR_Offset : constant := 16#0C#;
+   --  FSF GCC 14 is unable to evaluate register's addresses in compiler time
+   --  and use objects allocated in RAM to store addresses registers.
 
    --------------
    -- RCC_CFGR --
@@ -200,12 +201,18 @@ is
 
    RCC_CR      : RCC_CR_Register
      with Import, Volatile, Full_Access_Only,
-          Address => RCC_Base_Address + RCC_CR_Offset;
+          Address =>
+            System.Storage_Elements.To_Address
+              (RCC_Base_Address + RCC_CR_Offset);
    RCC_CFGR    : RCC_CFGR_Regiter
      with Import, Volatile, Full_Access_Only,
-          Address => RCC_Base_Address + RCC_CFGR_Offset;
+          Address =>
+            System.Storage_Elements.To_Address
+              (RCC_Base_Address + RCC_CFGR_Offset);
    RCC_PLLCFGR : RCC_PLLCFGR_Register
      with Import, Volatile, Full_Access_Only,
-          Address => RCC_Base_Address + RCC_PLLCFGR_Offset;
+          Address =>
+            System.Storage_Elements.To_Address
+              (RCC_Base_Address + RCC_PLLCFGR_Offset);
 
 end A0B.STM32G4.Peripherals.RCC;
