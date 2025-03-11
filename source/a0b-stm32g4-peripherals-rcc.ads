@@ -18,14 +18,249 @@ package A0B.STM32G4.Peripherals.RCC
   with Preelaborate, No_Elaboration_Code_All
 is
 
-   use type System.Storage_Elements.Integer_Address;
+   RCC_Base_Address    : constant := 16#4002_1000#;
+   RCC_CR_Offset       : constant := 16#00#;
+   RCC_CFGR_Offset     : constant := 16#08#;
+   RCC_PLLCFGR_Offset  : constant := 16#0C#;
+   RCC_AHB1ENR_Offset  : constant := 16#48#;
+   RCC_AHB2ENR_Offset  : constant := 16#4C#;
+   RCC_AHB3ENR_Offset  : constant := 16#50#;
+   RCC_APB1ENR1_Offset : constant := 16#58#;
+   RCC_APB1ENR2_Offset : constant := 16#5C#;
+   RCC_APB2ENR_Offset  : constant := 16#60#;
+   --  FSF GCC 14 is unable to evaluate register's address at compile time
+   --  and it use objects for constants allocated in RAM to store registers'
+   --  addresses. These constants should be initialized at elaboration, but
+   --  elaboration is disabled for this compilation unit. Named constants
+   --  for addresses and offsets are used to workaround this issue.
 
-   RCC_Base_Address   : constant := 16#4002_1000#;
-   RCC_CR_Offset      : constant := 16#00#;
-   RCC_CFGR_Offset    : constant := 16#08#;
-   RCC_PLLCFGR_Offset : constant := 16#0C#;
-   --  FSF GCC 14 is unable to evaluate register's addresses in compiler time
-   --  and use objects allocated in RAM to store addresses registers.
+   -----------------
+   -- RCC_AHB1ENR --
+   -----------------
+
+   type RCC_AHB1ENR_Register is record
+      DMA1EN         : Boolean;
+      DMA2EN         : Boolean;
+      DMAMUX1EN      : Boolean;
+      CORDICEN       : Boolean;
+      FMACEN         : Boolean;
+      Reserved_5_7   : A0B.Types.Reserved_3;
+      FLASHEN        : Boolean;
+      Reserved_9_11  : A0B.Types.Reserved_3;
+      CRCEN          : Boolean;
+      Reserved_13_31 : A0B.Types.Reserved_19;
+   end record with Size => 32;
+
+   for RCC_AHB1ENR_Register use record
+      DMA1EN         at 0 range 0 .. 0;
+      DMA2EN         at 0 range 1 .. 1;
+      DMAMUX1EN      at 0 range 2 .. 2;
+      CORDICEN       at 0 range 3 .. 3;
+      FMACEN         at 0 range 4 .. 4;
+      Reserved_5_7   at 0 range 5 .. 7;
+      FLASHEN        at 0 range 8 .. 8;
+      Reserved_9_11  at 0 range 9 .. 11;
+      CRCEN          at 0 range 12 .. 12;
+      Reserved_13_31 at 0 range 13 .. 31;
+   end record;
+
+   -----------------
+   -- RCC_AHB2ENR --
+   -----------------
+
+   type RCC_AHB2ENR_Register is record
+      GPIOAEN        : Boolean;
+      GPIOBEN        : Boolean;
+      GPIOCEN        : Boolean;
+      GPIODEN        : Boolean;
+      GPIOEEN        : Boolean;
+      GPIOFEN        : Boolean;
+      GPIOGEN        : Boolean;
+      Reserved_7_12  : A0B.Types.Reserved_6;
+      ADC12EN        : Boolean;
+      ADC345EN       : Boolean;
+      Reserved_15    : A0B.Types.Reserved_1;
+      DAC1EN         : Boolean;
+      DAC2EN         : Boolean;
+      DAC3EN         : Boolean;
+      DAC4EN         : Boolean;
+      Reserved_20_23 : A0B.Types.Reserved_4;
+      AESEN          : Boolean;
+      Reserved_25    : A0B.Types.Reserved_1;
+      RNGEN          : Boolean;
+      Reserved_27_31 : A0B.Types.Reserved_5;
+   end record with Size => 32;
+
+   for RCC_AHB2ENR_Register use record
+      GPIOAEN        at 0 range 0 .. 0;
+      GPIOBEN        at 0 range 1 .. 1;
+      GPIOCEN        at 0 range 2 .. 2;
+      GPIODEN        at 0 range 3 .. 3;
+      GPIOEEN        at 0 range 4 .. 4;
+      GPIOFEN        at 0 range 5 .. 5;
+      GPIOGEN        at 0 range 6 .. 6;
+      Reserved_7_12  at 0 range 7 .. 12;
+      ADC12EN        at 0 range 13 .. 13;
+      ADC345EN       at 0 range 14 .. 14;
+      Reserved_15    at 0 range 15 .. 15;
+      DAC1EN         at 0 range 16 .. 16;
+      DAC2EN         at 0 range 17 .. 17;
+      DAC3EN         at 0 range 18 .. 18;
+      DAC4EN         at 0 range 19 .. 19;
+      Reserved_20_23 at 0 range 20 .. 23;
+      AESEN          at 0 range 24 .. 24;
+      Reserved_25    at 0 range 25 .. 25;
+      RNGEN          at 0 range 26 .. 26;
+      Reserved_27_31 at 0 range 27 .. 31;
+   end record;
+
+   -----------------
+   -- RCC_AHB3ENR --
+   -----------------
+
+   type RCC_AHB3ENR_Register is record
+      FMCEN         : Boolean;
+      Reserved_1_7  : A0B.Types.Reserved_7;
+      QSPIEN        : Boolean;
+      Reserved_9_31 : A0B.Types.Reserved_23;
+   end record with Size => 32;
+
+   for RCC_AHB3ENR_Register use record
+      FMCEN         at 0 range 0 .. 0;
+      Reserved_1_7  at 0 range 1 .. 7;
+      QSPIEN        at 0 range 8 .. 8;
+      Reserved_9_31 at 0 range 9 .. 31;
+   end record;
+
+   ------------------
+   -- RCC_APB1ENR1 --
+   ------------------
+
+   type RCC_APB1ENR1_Register is record
+      TIM2EN         : Boolean;
+      TIM3EN         : Boolean;
+      TIM4EN         : Boolean;
+      TIM5EN         : Boolean;
+      TIM6EN         : Boolean;
+      TIM7EN         : Boolean;
+      Reserved_6_7   : A0B.Types.Reserved_2;
+      CRSEN          : Boolean;
+      Reserved_9     : A0B.Types.Reserved_1;
+      RTCAPBEN       : Boolean;
+      WWDGEN         : Boolean;
+      Reserved_12_13 : A0B.Types.Reserved_2;
+      SPI2EN         : Boolean;
+      SPI3EN         : Boolean;
+      Reserved_16    : A0B.Types.Reserved_1;
+      USART2EN       : Boolean;
+      USART3EN       : Boolean;
+      UART4EN        : Boolean;
+      UART5EN        : Boolean;
+      I2C1EN         : Boolean;
+      I2C2EN         : Boolean;
+      USBEN          : Boolean;
+      Reserved_24    : A0B.Types.Reserved_1;
+      FDCANEN        : Boolean;
+      Reserved_26_27 : A0B.Types.Reserved_2;
+      PWREN          : Boolean;
+      Reserved_29    : A0B.Types.Reserved_1;
+      I2C3EN         : Boolean;
+      LPTIM1EN       : Boolean;
+   end record with Size => 32;
+
+   for RCC_APB1ENR1_Register use record
+      TIM2EN         at 0 range 0 .. 0;
+      TIM3EN         at 0 range 1 .. 1;
+      TIM4EN         at 0 range 2 .. 2;
+      TIM5EN         at 0 range 3 .. 3;
+      TIM6EN         at 0 range 4 .. 4;
+      TIM7EN         at 0 range 5 .. 5;
+      Reserved_6_7   at 0 range 6 .. 7;
+      CRSEN          at 0 range 8 .. 8;
+      Reserved_9     at 0 range 9 .. 9;
+      RTCAPBEN       at 0 range 10 .. 10;
+      WWDGEN         at 0 range 11 .. 11;
+      Reserved_12_13 at 0 range 12 .. 13;
+      SPI2EN         at 0 range 14 .. 14;
+      SPI3EN         at 0 range 15 .. 15;
+      Reserved_16    at 0 range 16 .. 16;
+      USART2EN       at 0 range 17 .. 17;
+      USART3EN       at 0 range 18 .. 18;
+      UART4EN        at 0 range 19 .. 19;
+      UART5EN        at 0 range 20 .. 20;
+      I2C1EN         at 0 range 21 .. 21;
+      I2C2EN         at 0 range 22 .. 22;
+      USBEN          at 0 range 23 .. 23;
+      Reserved_24    at 0 range 24 .. 24;
+      FDCANEN        at 0 range 25 .. 25;
+      Reserved_26_27 at 0 range 26 .. 27;
+      PWREN          at 0 range 28 .. 28;
+      Reserved_29    at 0 range 29 .. 29;
+      I2C3EN         at 0 range 30 .. 30;
+      LPTIM1EN       at 0 range 31 .. 31;
+   end record;
+
+   ------------------
+   -- RCC_APB1ENR2 --
+   ------------------
+
+   type RCC_APB1ENR2_Register is record
+      LPUART1EN     : Boolean;
+      I2C4EN        : Boolean;
+      Reserved_2_7  : A0B.Types.Reserved_6;
+      UCPD1EN       : Boolean;
+      Reserved_9_31 : A0B.Types.Reserved_23;
+   end record with Size => 32;
+
+   for RCC_APB1ENR2_Register use record
+      LPUART1EN     at 0 range 0 .. 0;
+      I2C4EN        at 0 range 1 .. 1;
+      Reserved_2_7  at 0 range 2 .. 7;
+      UCPD1EN       at 0 range 8 .. 8;
+      Reserved_9_31 at 0 range 9 .. 31;
+   end record;
+
+   -----------------
+   -- RCC_APB2ENR --
+   -----------------
+
+   type RCC_APB2ENR_Register is record
+      SYSCFGEN       : Boolean;
+      Reserved_1_10  : A0B.Types.Reserved_10;
+      TIM1EN         : Boolean;
+      SPI1EN         : Boolean;
+      TIM8EN         : Boolean;
+      USART1EN       : Boolean;
+      SPI4EN         : Boolean;
+      TIM15EN        : Boolean;
+      TIM16EN        : Boolean;
+      TIM17EN        : Boolean;
+      Reserved_19    : A0B.Types.Reserved_1;
+      TIM20EN        : Boolean;
+      SAI1EN         : Boolean;
+      Reserved_22_25 : A0B.Types.Reserved_4;
+      HRTIM1EN       : Boolean;
+      Reserved_27_31 : A0B.Types.Reserved_5;
+   end record with Size => 32;
+
+   for RCC_APB2ENR_Register use record
+      SYSCFGEN       at 0 range 0 .. 0;
+      Reserved_1_10  at 0 range 1 .. 10;
+      TIM1EN         at 0 range 11 .. 11;
+      SPI1EN         at 0 range 12 .. 12;
+      TIM8EN         at 0 range 13 .. 13;
+      USART1EN       at 0 range 14 .. 14;
+      SPI4EN         at 0 range 15 .. 15;
+      TIM15EN        at 0 range 16 .. 16;
+      TIM16EN        at 0 range 17 .. 17;
+      TIM17EN        at 0 range 18 .. 18;
+      Reserved_19    at 0 range 19 .. 19;
+      TIM20EN        at 0 range 20 .. 20;
+      SAI1EN         at 0 range 21 .. 21;
+      Reserved_22_25 at 0 range 22 .. 25;
+      HRTIM1EN       at 0 range 26 .. 26;
+      Reserved_27_31 at 0 range 27 .. 31;
+   end record;
 
    --------------
    -- RCC_CFGR --
@@ -199,20 +434,34 @@ is
       PLLPDIV        at 0 range 27 .. 31;
    end record;
 
-   RCC_CR      : RCC_CR_Register
-     with Import, Volatile, Full_Access_Only,
-          Address =>
-            System.Storage_Elements.To_Address
-              (RCC_Base_Address + RCC_CR_Offset);
-   RCC_CFGR    : RCC_CFGR_Regiter
-     with Import, Volatile, Full_Access_Only,
-          Address =>
-            System.Storage_Elements.To_Address
-              (RCC_Base_Address + RCC_CFGR_Offset);
-   RCC_PLLCFGR : RCC_PLLCFGR_Register
-     with Import, Volatile, Full_Access_Only,
-          Address =>
-            System.Storage_Elements.To_Address
-              (RCC_Base_Address + RCC_PLLCFGR_Offset);
+   use System.Storage_Elements;
+
+   RCC_CR       : RCC_CR_Register
+     with Import, Volatile,
+          Address => To_Address (RCC_Base_Address + RCC_CR_Offset);
+   RCC_CFGR     : RCC_CFGR_Regiter
+     with Import, Volatile,
+          Address => To_Address (RCC_Base_Address + RCC_CFGR_Offset);
+   RCC_PLLCFGR  : RCC_PLLCFGR_Register
+     with Import, Volatile,
+          Address => To_Address (RCC_Base_Address + RCC_PLLCFGR_Offset);
+   RCC_AHB1ENR  : RCC_AHB1ENR_Register
+     with Import, Volatile,
+          Address => To_Address (RCC_Base_Address + RCC_AHB1ENR_Offset);
+   RCC_AHB2ENR  : RCC_AHB2ENR_Register
+     with Import, Volatile,
+          Address => To_Address (RCC_Base_Address + RCC_AHB2ENR_Offset);
+   RCC_AHB3ENR  : RCC_AHB3ENR_Register
+     with Import, Volatile,
+          Address => To_Address (RCC_Base_Address + RCC_AHB3ENR_Offset);
+   RCC_APB1ENR1 : RCC_APB1ENR1_Register
+     with Import, Volatile,
+          Address => To_Address (RCC_Base_Address + RCC_APB1ENR1_Offset);
+   RCC_APB1ENR2 : RCC_APB1ENR2_Register
+     with Import, Volatile,
+          Address => To_Address (RCC_Base_Address + RCC_APB1ENR2_Offset);
+   RCC_APB2ENR  : RCC_APB2ENR_Register
+     with Import, Volatile,
+          Address => To_Address (RCC_Base_Address + RCC_APB2ENR_Offset);
 
 end A0B.STM32G4.Peripherals.RCC;
