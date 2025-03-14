@@ -1,6 +1,6 @@
 name = "a0b_stm32g4"
 description = "A0B: STM32G4 base support"
-version = "0.1.0"
+version = "0.2.0-dev"
 
 website = "https://github.com/godunko/a0b-stm32g4"
 authors = ["Vadim Godunko"]
