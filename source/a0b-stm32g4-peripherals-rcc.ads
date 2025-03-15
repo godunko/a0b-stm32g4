@@ -28,6 +28,7 @@ is
    RCC_APB1ENR1_Offset : constant := 16#58#;
    RCC_APB1ENR2_Offset : constant := 16#5C#;
    RCC_APB2ENR_Offset  : constant := 16#60#;
+   RCC_CCIPR_Offset    : constant := 16#88#;
    --  FSF GCC 14 is unable to evaluate register's address at compile time
    --  and it use objects for constants allocated in RAM to store registers'
    --  addresses. These constants should be initialized at elaboration, but
@@ -262,6 +263,90 @@ is
       Reserved_27_31 at 0 range 27 .. 31;
    end record;
 
+   ---------------
+   -- RCC_CCIPR --
+   ---------------
+
+   type RCC_CCIPR_USART1SEL_Field is (PCLK, SYSCLK, HSI16, LSE) with Size => 2;
+
+   type RCC_CCIPR_USART2SEL_Field is (PCLK, SYSCLK, HSI16, LSE) with Size => 2;
+
+   type RCC_CCIPR_USART3SEL_Field is (PCLK, SYSCLK, HSI16, LSE) with Size => 2;
+
+   type RCC_CCIPR_UART4SEL_Field is (PCLK, SYSCLK, HSI16, LSE) with Size => 2;
+
+   type RCC_CCIPR_UART5SEL_Field is (PCLK, SYSCLK, HSI16, LSE) with Size => 2;
+
+   type RCC_CCIPR_LPUART1SEL_Field is (PCLK, SYSCLK, HSI16, LSE)
+     with Size => 2;
+
+   type RCC_CCIPR_I2C1SEL_Field is (PCLK, SYSCLK, HSI16, Reserved_11)
+     with Size => 2;
+
+   type RCC_CCIPR_I2C2SEL_Field is (PCLK, SYSCLK, HSI16, Reserved_11)
+     with Size => 2;
+
+   type RCC_CCIPR_I2C3SEL_Field is (PCLK, SYSCLK, HSI16, Reserved_11)
+     with Size => 2;
+
+   type RCC_CCIPR_LPTIM1SEL_Field is (PCLK, SYSCLK, HSI16, LSE) with Size => 2;
+
+   type RCC_CCIPR_SAI1SEL_Field is (SYSCLK, PLL_Q, I2S_CKIN, HSI16)
+     with Size => 2;
+
+   type RCC_CCIPR_I2S23SEL_Field is (SYSCLK, PLL_Q, I2S_CKIN, HSI16)
+     with Size => 2;
+
+   type RCC_CCIPR_FDCANSEL_Field is (HSE, PLL_Q, PCLK, Reserved_11)
+     with Size => 2;
+
+   type RCC_CCIPR_CLK48SEL_Field is (HSI48, Reserved_01, PLL_Q, Reserved_11)
+     with Size => 2;
+
+   type RCC_CCIPR_ADC12SEL_Field is (No, PLL_P, SYSCLK, Reserved_11)
+     with Size => 2;
+
+   type RCC_CCIPR_ADC345SEL_Field is (No, PLL_P, SYSCLK, Reserved_11)
+     with Size => 2;
+
+   type RCC_CCIPR_Register is record
+      USART1SEL  : RCC_CCIPR_USART1SEL_Field;
+      USART2SEL  : RCC_CCIPR_USART2SEL_Field;
+      USART3SEL  : RCC_CCIPR_USART3SEL_Field;
+      UART4SEL   : RCC_CCIPR_UART4SEL_Field;
+      UART5SEL   : RCC_CCIPR_UART5SEL_Field;
+      LPUART1SEL : RCC_CCIPR_LPUART1SEL_Field;
+      I2C1SEL    : RCC_CCIPR_I2C1SEL_Field;
+      I2C2SEL    : RCC_CCIPR_I2C2SEL_Field;
+      I2C3SEL    : RCC_CCIPR_I2C3SEL_Field;
+      LPTIM1SEL  : RCC_CCIPR_LPTIM1SEL_Field;
+      SAI1SEL    : RCC_CCIPR_SAI1SEL_Field;
+      I2S23SEL   : RCC_CCIPR_I2S23SEL_Field;
+      FDCANSEL   : RCC_CCIPR_FDCANSEL_Field;
+      CLK48SEL   : RCC_CCIPR_CLK48SEL_Field;
+      ADC12SEL   : RCC_CCIPR_ADC12SEL_Field;
+      ADC345SEL  : RCC_CCIPR_ADC345SEL_Field;
+   end record with Size => 32;
+
+   for RCC_CCIPR_Register use record
+      USART1SEL  at 0 range 0 .. 1;
+      USART2SEL  at 0 range 2 .. 3;
+      USART3SEL  at 0 range 4 .. 5;
+      UART4SEL   at 0 range 6 .. 7;
+      UART5SEL   at 0 range 8 .. 9;
+      LPUART1SEL at 0 range 10 .. 11;
+      I2C1SEL    at 0 range 12 .. 13;
+      I2C2SEL    at 0 range 14 .. 15;
+      I2C3SEL    at 0 range 16 .. 17;
+      LPTIM1SEL  at 0 range 18 .. 19;
+      SAI1SEL    at 0 range 20 .. 21;
+      I2S23SEL   at 0 range 22 .. 23;
+      FDCANSEL   at 0 range 24 .. 25;
+      CLK48SEL   at 0 range 26 .. 27;
+      ADC12SEL   at 0 range 28 .. 29;
+      ADC345SEL  at 0 range 30 .. 31;
+   end record;
+
    --------------
    -- RCC_CFGR --
    --------------
@@ -463,5 +548,8 @@ is
    RCC_APB2ENR  : RCC_APB2ENR_Register
      with Import, Volatile,
           Address => To_Address (RCC_Base_Address + RCC_APB2ENR_Offset);
+   RCC_CCIPR    : RCC_CCIPR_Register
+     with Import, Volatile,
+          Address => To_Address (RCC_Base_Address + RCC_CCIPR_Offset);
 
 end A0B.STM32G4.Peripherals.RCC;
