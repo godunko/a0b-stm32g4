@@ -11,7 +11,7 @@ pragma Ada_2022;
 with System.Storage_Elements;
 
 package A0B.STM32G4.Peripherals
-  with Preelaborate, No_Elaboration_Code_All
+  with Pure, No_Elaboration_Code_All
 is
 
    EXTI_Base   : constant System.Address :=
