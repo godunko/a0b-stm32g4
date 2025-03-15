@@ -32,5 +32,15 @@ is
      System.Storage_Elements.To_Address (16#4800_1800#);
    SYSCFG_Base : constant System.Address :=
      System.Storage_Elements.To_Address (16#4001_0000#);
+   USART1_Base : constant System.Address :=
+     System.Storage_Elements.To_Address (16#4001_3800#);
+   USART2_Base : constant System.Address :=
+     System.Storage_Elements.To_Address (16#4000_4400#);
+   USART3_Base : constant System.Address :=
+     System.Storage_Elements.To_Address (16#4000_4800#);
+   UART4_Base  : constant System.Address :=
+     System.Storage_Elements.To_Address (16#4000_4C00#);
+   UART5_Base  : constant System.Address :=
+     System.Storage_Elements.To_Address (16#4000_5000#);
 
 end A0B.STM32G4.Peripherals;
